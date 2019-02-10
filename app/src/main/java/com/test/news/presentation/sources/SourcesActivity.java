@@ -1,9 +1,11 @@
-package com.test.news;
+package com.test.news.presentation.sources;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class SourcesActivity extends AppCompatActivity {
+import com.test.news.R;
+import com.test.news.presentation.base.BaseActivity;
+
+public class SourcesActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

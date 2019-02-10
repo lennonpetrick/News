@@ -1,17 +1,19 @@
-package com.test.news.presentation.sources;
+package com.test.news.presentation.articles;
 
+import com.test.news.models.Article;
 import com.test.news.models.Source;
 import com.test.news.presentation.base.BaseContract;
 
 import java.util.List;
 
-public interface SourcesContract {
+public interface ArticlesContract {
 
     interface View extends BaseContract.View {
-        void setSources(List<Source> sources);
+        void setArticles(List<Article> articles);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
-
+        void setSource(Source source);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.test.news.di;
+package com.test.news.di.modules;
 
 import com.test.news.presentation.articles.ArticlesActivity;
 import com.test.news.presentation.sources.SourcesActivity;

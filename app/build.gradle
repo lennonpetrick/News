@@ -9,6 +9,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "API_URL", "\"https://newsapi.org/v2/\""
+        buildConfigField "String", "API_KEY", getToken("api_key")
     }
     buildTypes {
         release {
@@ -20,6 +23,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+def getToken(String property) {
+    Properties properties = new Properties()
+    properties.load(new FileInputStream(rootProject.file("api_tokens.properties")))
+    return "\"" + properties.getProperty(property) + "\""
 }
 
 dependencies {

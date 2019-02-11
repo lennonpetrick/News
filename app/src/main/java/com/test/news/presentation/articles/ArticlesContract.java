@@ -1,7 +1,7 @@
 package com.test.news.presentation.articles;
 
-import com.test.news.models.Article;
-import com.test.news.models.Source;
+import com.test.news.domain.models.Article;
+import com.test.news.domain.models.Source;
 import com.test.news.presentation.base.BaseContract;
 
 import java.util.List;

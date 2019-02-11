@@ -1,4 +1,4 @@
-package com.test.news.models;
+package com.test.news.domain.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,6 +7,7 @@ public class Source implements Parcelable {
 
     private String title,
                    description,
+                   category,
                    url;
 
     public Source() {}
@@ -14,6 +15,7 @@ public class Source implements Parcelable {
     private Source(Parcel in) {
         title = in.readString();
         description = in.readString();
+        category = in.readString();
         url = in.readString();
     }
 
@@ -33,6 +35,14 @@ public class Source implements Parcelable {
         this.description = description;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -50,6 +60,7 @@ public class Source implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(description);
+        dest.writeString(category);
         dest.writeString(url);
     }
 

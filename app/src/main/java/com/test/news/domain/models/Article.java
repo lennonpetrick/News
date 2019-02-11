@@ -1,4 +1,4 @@
-package com.test.news.models;
+package com.test.news.domain.models;
 
 public class Article {
 

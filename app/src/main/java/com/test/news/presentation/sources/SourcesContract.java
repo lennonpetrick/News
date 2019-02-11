@@ -1,6 +1,6 @@
 package com.test.news.presentation.sources;
 
-import com.test.news.models.Source;
+import com.test.news.domain.models.Source;
 import com.test.news.presentation.base.BaseContract;
 
 import java.util.List;

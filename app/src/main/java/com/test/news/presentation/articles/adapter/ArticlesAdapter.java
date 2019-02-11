@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.test.news.R;
-import com.test.news.models.Article;
+import com.test.news.domain.models.Article;
 
 import java.util.List;
 

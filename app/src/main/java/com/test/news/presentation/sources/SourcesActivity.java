@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.test.news.R;
-import com.test.news.models.Source;
+import com.test.news.domain.models.Source;
 import com.test.news.presentation.articles.ArticlesActivity;
 import com.test.news.presentation.base.BaseActivity;
 import com.test.news.presentation.sources.adapter.SourcesAdapter;

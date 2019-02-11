@@ -1,4 +1,4 @@
-package com.test.news.di;
+package com.test.news.di.modules;
 
 import android.support.annotation.NonNull;
 

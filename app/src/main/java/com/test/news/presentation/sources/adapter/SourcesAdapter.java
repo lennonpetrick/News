@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.test.news.R;
-import com.test.news.models.Source;
+import com.test.news.domain.models.Source;
 
 import java.util.List;
 

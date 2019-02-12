@@ -6,6 +6,7 @@ import com.test.news.data.entities.ArticleEntity;
 import com.test.news.data.entities.SourceEntity;
 import com.test.news.di.qualifiers.ApiKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,8 +20,12 @@ import io.reactivex.Single;
  * */
 public class RemoteNewsDataSource {
 
-    private NewsService mService;
-    private String mApiKey;
+    private static final int PAGE_SIZE = 10;
+
+    private final NewsService mService;
+    private final String mApiKey;
+    private int mTotalResults,
+                mItemsCount;
 
     @Inject
     public RemoteNewsDataSource(@NonNull NewsService service,
@@ -40,14 +45,27 @@ public class RemoteNewsDataSource {
     }
 
     /**
-     * Returns a list of {@link ArticleEntity} from the api for a specific query.
+     * Returns a list of {@link ArticleEntity} from the api for a specific
+     * query with pagination.
      *
      * @param query A query to search for the articles.
+     * @param page The current page through the results.
      * @return A single.
      *  */
-    public Single<List<ArticleEntity>> getArticles(@NonNull String query) {
-        return mService.getArticles(query, mApiKey)
-                .map(Wrapper::getArticles);
+    public Single<List<ArticleEntity>> getArticles(@NonNull String query, int page) {
+
+        if (page == 1) {
+            mItemsCount = 0;
+        }
+
+        if (mTotalResults > 0 && mItemsCount >= mTotalResults) {
+            return Single.just(new ArrayList<>());
+        }
+
+        return mService.getArticles(query, mApiKey, PAGE_SIZE, page)
+                .doAfterSuccess(wrapper -> mTotalResults = wrapper.getTotalResults())
+                .map(Wrapper::getArticles)
+                .doAfterSuccess(articleEntities -> mItemsCount += articleEntities.size());
     }
 
 }

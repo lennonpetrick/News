@@ -16,12 +16,17 @@ import io.reactivex.observers.DisposableSingleObserver;
 public class ArticlesPresenter extends BasePresenter<ArticlesContract.View>
         implements ArticlesContract.Presenter {
 
+    private static final int THRESHOLD = 3;
+
     private Source mSource;
     private GetArticles mGetArticles;
+    private int mPage;
+    private boolean mLoading;
 
     @Inject
     public ArticlesPresenter(@NonNull GetArticles getArticles) {
         mGetArticles = getArticles;
+        mPage = 1;
     }
 
     @Override
@@ -31,18 +36,15 @@ public class ArticlesPresenter extends BasePresenter<ArticlesContract.View>
         }
 
         mView.showLoading();
-        mGetArticles.execute(new DisposableSingleObserver<List<Article>>() {
-            @Override
-            public void onSuccess(List<Article> articles) {
-                mView.hideLoading();
-                mView.setArticles(articles);
-            }
+        executeGetArticles();
+    }
 
-            @Override
-            public void onError(Throwable e) {
-                mView.showError(e.getMessage());
-            }
-        }, GetArticles.Params.forSource(mSource));
+    @Override
+    public void loadMore(int lastVisibleItem, int totalItemCount) {
+        if (!mLoading && (lastVisibleItem + THRESHOLD) >= totalItemCount) {
+            mPage++;
+            executeGetArticles();
+        }
     }
 
     @Override
@@ -56,5 +58,23 @@ public class ArticlesPresenter extends BasePresenter<ArticlesContract.View>
         mGetArticles = null;
         mSource = null;
         super.destroy();
+    }
+
+    private void executeGetArticles() {
+        mLoading = true;
+        mGetArticles.execute(new DisposableSingleObserver<List<Article>>() {
+            @Override
+            public void onSuccess(List<Article> articles) {
+                mView.hideLoading();
+                mView.addArticles(articles);
+                mLoading = false;
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.showError(e.getMessage());
+                mLoading = false;
+            }
+        }, GetArticles.Params.forSource(mSource, mPage));
     }
 }

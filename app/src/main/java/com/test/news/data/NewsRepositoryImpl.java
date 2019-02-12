@@ -40,13 +40,16 @@ public class NewsRepositoryImpl implements NewsRepository {
     }
 
     /**
-     * Returns a list of {@link ArticleEntity} from the repository for a specific query.
+     * Returns a list of {@link ArticleEntity} from the api for a specific
+     * query with pagination.
      *
      * @param query A query to search for the articles.
+     * @param page The current page through the results.
      * @return A single.
      *  */
     @Override
-    public Single<List<ArticleEntity>> getArticles(@NonNull String query) {
-        return mDataSource.getArticles(query);
+    public Single<List<ArticleEntity>> getArticles(@NonNull String query,
+                                                   int page) {
+        return mDataSource.getArticles(query, page);
     }
 }

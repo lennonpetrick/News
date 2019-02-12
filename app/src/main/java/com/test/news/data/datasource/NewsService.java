@@ -16,6 +16,8 @@ public interface NewsService {
 
     @GET("everything/")
     Single<Wrapper> getArticles(@Query("q") String query,
-                                @Query("apiKey") String apiKey);
+                                @Query("apiKey") String apiKey,
+                                @Query("pageSize") int pageSize,
+                                @Query("page") int page);
 
 }

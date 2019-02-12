@@ -9,10 +9,11 @@ import java.util.List;
 public interface ArticlesContract {
 
     interface View extends BaseContract.View {
-        void setArticles(List<Article> articles);
+        void addArticles(List<Article> articles);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
+        void loadMore(int lastVisibleItem, int totalItemCount);
         void setSource(Source source);
     }
 

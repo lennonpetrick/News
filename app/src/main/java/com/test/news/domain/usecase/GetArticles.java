@@ -37,7 +37,7 @@ public class GetArticles extends UseCase<List<Article>, GetArticles.Params> {
 
     @Override
     Single<List<Article>> buildUseCase(Params params) {
-        return mRepository.getArticles(params.mQuery)
+        return mRepository.getArticles(params.mQuery, params.mPage)
                 .toObservable()
                 .flatMapIterable(articleEntities -> articleEntities)
                 .map(ModelMapper::transformArticle)
@@ -47,13 +47,16 @@ public class GetArticles extends UseCase<List<Article>, GetArticles.Params> {
     public static final class Params {
 
         private final String mQuery;
+        private final int mPage;
 
-        private Params(String query) {
+        private Params(String query, int page) {
             this.mQuery = query;
+            this.mPage = page;
         }
 
-        public static Params forSource(Source source) {
-            return new Params(source.getCategory());
+        public static Params forSource(@NonNull Source source,
+                                       int page) {
+            return new Params(source.getCategory(), page);
         }
     }
 }

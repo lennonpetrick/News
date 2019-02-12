@@ -24,4 +24,8 @@ public class Wrapper {
     public List<ArticleEntity> getArticles() {
         return articles;
     }
+
+    public int getTotalResults() {
+        return totalResults;
+    }
 }

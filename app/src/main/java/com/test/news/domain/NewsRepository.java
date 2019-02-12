@@ -13,6 +13,7 @@ public interface NewsRepository {
 
     Single<List<SourceEntity>> getSources();
 
-    Single<List<ArticleEntity>> getArticles(@NonNull String query);
+    Single<List<ArticleEntity>> getArticles(@NonNull String query,
+                                            int page);
 
 }

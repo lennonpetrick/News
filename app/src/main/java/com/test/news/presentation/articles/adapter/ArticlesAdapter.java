@@ -2,6 +2,7 @@ package com.test.news.presentation.articles.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
         this.mArticles = articles;
     }
 
-    public void setArticles(List<Article> articles) {
-        this.mArticles = articles;
+    public void addArticles(List<Article> articles) {
+        this.mArticles.addAll(articles);
         notifyDataSetChanged();
     }
 
@@ -66,9 +67,12 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
         }
 
         private void bind(Article article) {
-            Picasso.get()
-                    .load(article.getImageUrl())
-                    .into(mIvImage);
+            final String url = article.getImageUrl();
+            if (!TextUtils.isEmpty(url)) {
+                Picasso.get()
+                        .load(url)
+                        .into(mIvImage);
+            }
 
             mTvTitle.setText(article.getTitle());
             mTvDescription.setText(article.getDescription());

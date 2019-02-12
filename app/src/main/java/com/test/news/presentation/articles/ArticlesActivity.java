@@ -1,7 +1,10 @@
 package com.test.news.presentation.articles;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +27,7 @@ public class ArticlesActivity extends BaseActivity<ArticlesContract.Presenter>
     @BindView(R.id.rvArticles) RecyclerView mRvArticles;
 
     private ArticlesAdapter mArticlesAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +49,32 @@ public class ArticlesActivity extends BaseActivity<ArticlesContract.Presenter>
         }
 
         mRvArticles.addItemDecoration(divider);
-        mRvArticles.setLayoutManager(new LinearLayoutManager(this));
+        mRvArticles.setLayoutManager(mLayoutManager = new LinearLayoutManager(this));
         mRvArticles.setHasFixedSize(false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            setOnScrollListener_23();
+        } else {
+            setOnScrollListener();
+        }
+    }
+
+    private void setOnScrollListener() {
+        mRvArticles.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mPresenter.loadMore(mLayoutManager.findLastVisibleItemPosition(),
+                        mLayoutManager.getItemCount());
+            }
+        });
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private void setOnScrollListener_23() {
+        mRvArticles.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) ->
+                        mPresenter.loadMore(mLayoutManager.findLastVisibleItemPosition(),
+                        mLayoutManager.getItemCount()));
     }
 
     private void checkExtras(Bundle bundle) {
@@ -60,12 +88,12 @@ public class ArticlesActivity extends BaseActivity<ArticlesContract.Presenter>
     }
 
     @Override
-    public void setArticles(List<Article> articles) {
+    public void addArticles(List<Article> articles) {
         if (mArticlesAdapter == null) {
             mArticlesAdapter = new ArticlesAdapter(articles);
             mRvArticles.setAdapter(mArticlesAdapter);
         } else {
-            mArticlesAdapter.setArticles(articles);
+            mArticlesAdapter.addArticles(articles);
         }
     }
 }

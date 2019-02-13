@@ -3,8 +3,11 @@ package com.test.news.presentation.base;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.test.news.R;
@@ -28,9 +31,14 @@ public abstract class BaseActivity<T extends BaseContract.Presenter>
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mPresenter.load();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -68,5 +76,15 @@ public abstract class BaseActivity<T extends BaseContract.Presenter>
         }
 
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    protected void setUpBackButton(boolean enableHome){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(enableHome);
+        }
     }
 }

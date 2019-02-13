@@ -5,4 +5,5 @@
     <dimen name="recycler_view_divider">10dp</dimen>
     <dimen name="text_margin_top">8dp</dimen>
     <dimen name="image_margin_top">8dp</dimen>
+    <dimen name="image_height">200dp</dimen>
 </resources>

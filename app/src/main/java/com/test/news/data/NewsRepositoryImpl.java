@@ -44,12 +44,14 @@ public class NewsRepositoryImpl implements NewsRepository {
      * query with pagination.
      *
      * @param query A query to search for the articles.
+     * @param sourceId The source id for this query.
      * @param page The current page through the results.
      * @return A single.
      *  */
     @Override
     public Single<List<ArticleEntity>> getArticles(@NonNull String query,
+                                                   @NonNull String sourceId,
                                                    int page) {
-        return mDataSource.getArticles(query, page);
+        return mDataSource.getArticles(query, sourceId, page);
     }
 }

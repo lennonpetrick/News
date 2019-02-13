@@ -17,6 +17,7 @@ public class ModelMapper {
 
     public static Source transformSource(@NonNull SourceEntity entity) {
         Source model = new Source();
+        model.setId(entity.getId());
         model.setTitle(entity.getName());
         model.setDescription(entity.getDescription());
         model.setCategory(entity.getCategory());

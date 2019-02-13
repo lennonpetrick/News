@@ -30,8 +30,10 @@ public class SourcesActivity extends BaseActivity<SourcesContract.Presenter>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sources);
         ButterKnife.bind(this);
+        setUpBackButton(false);
         setUpRecyclerView();
         mPresenter.setView(this);
+        mPresenter.load();
     }
 
     private void setUpRecyclerView() {

@@ -34,9 +34,11 @@ public class ArticlesActivity extends BaseActivity<ArticlesContract.Presenter>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_articles);
         ButterKnife.bind(this);
+        setUpBackButton(true);
         setUpRecyclerView();
         mPresenter.setView(this);
         checkExtras(getIntent().getExtras());
+        mPresenter.load();
     }
 
     private void setUpRecyclerView() {

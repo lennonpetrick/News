@@ -49,10 +49,13 @@ public class RemoteNewsDataSource {
      * query with pagination.
      *
      * @param query A query to search for the articles.
+     * @param sourceId The source id for this query.
      * @param page The current page through the results.
      * @return A single.
      *  */
-    public Single<List<ArticleEntity>> getArticles(@NonNull String query, int page) {
+    public Single<List<ArticleEntity>> getArticles(@NonNull String query,
+                                                   @NonNull String sourceId,
+                                                   int page) {
 
         if (page == 1) {
             mItemsCount = 0;
@@ -62,7 +65,7 @@ public class RemoteNewsDataSource {
             return Single.just(new ArrayList<>());
         }
 
-        return mService.getArticles(query, mApiKey, PAGE_SIZE, page)
+        return mService.getArticles(query, sourceId, mApiKey, PAGE_SIZE, page)
                 .doAfterSuccess(wrapper -> mTotalResults = wrapper.getTotalResults())
                 .map(Wrapper::getArticles)
                 .doAfterSuccess(articleEntities -> mItemsCount += articleEntities.size());

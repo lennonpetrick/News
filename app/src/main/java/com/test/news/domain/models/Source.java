@@ -5,7 +5,8 @@ import android.os.Parcelable;
 
 public class Source implements Parcelable {
 
-    private String title,
+    private String id,
+                   title,
                    description,
                    category,
                    url;
@@ -13,10 +14,19 @@ public class Source implements Parcelable {
     public Source() {}
 
     private Source(Parcel in) {
+        id = in.readString();
         title = in.readString();
         description = in.readString();
         category = in.readString();
         url = in.readString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -58,6 +68,7 @@ public class Source implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(title);
         dest.writeString(description);
         dest.writeString(category);

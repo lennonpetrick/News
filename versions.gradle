@@ -7,7 +7,7 @@ ext {
     retrofit_version = '2.4.0'
     dagger_version = '2.19'
     runner_version = '1.0.2'
-    espresso_core_version = '3.0.2'
+    espresso_version = '3.0.2'
     junit_version = '4.12'
     mockito_version = '2.21.0'
     hamcrest_version = '1.3'

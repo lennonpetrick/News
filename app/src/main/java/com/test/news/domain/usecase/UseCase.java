@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.test.news.di.qualifiers.IOScheduler;
 import com.test.news.di.qualifiers.UIScheduler;
+import com.test.news.utils.EspressoIdlingResource;
 
 import dagger.internal.Preconditions;
 import io.reactivex.Scheduler;
@@ -65,6 +66,8 @@ public abstract class UseCase<T, P> {
     public void execute(@NonNull DisposableSingleObserver<T> observer, P params) {
         Preconditions.checkNotNull(observer);
         addDisposable(buildUseCase(params)
+                .doOnSubscribe(disposable -> EspressoIdlingResource.increment())
+                .doFinally(EspressoIdlingResource::decrement)
                 .subscribeOn(mWorkerThread)
                 .observeOn(mUiThread)
                 .subscribeWith(observer));

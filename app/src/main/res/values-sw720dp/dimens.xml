@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_padding">30dp</dimen>
+    <dimen name="recycler_view_padding">30dp</dimen>
+    <dimen name="recycler_view_divider">30dp</dimen>
+    <dimen name="text_margin_top">24dp</dimen>
+    <dimen name="image_margin_top">24dp</dimen>
+    <dimen name="image_height">400dp</dimen>
+    <dimen name="text_size_small">24sp</dimen>
+    <dimen name="text_size_medium">30sp</dimen>
+</resources>
